@@ -12,7 +12,7 @@ function Invoke-IntuneBackupClientAppAssignment {
     .EXAMPLE
     Invoke-IntuneBackupClientAppAssignment -Path "C:\temp"
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
@@ -32,7 +32,8 @@ function Invoke-IntuneBackupClientAppAssignment {
     $clientApps = Invoke-MgGraphRequest -Uri 'deviceAppManagement/mobileApps?$filter=(microsoft.graph.managedApp/appAvailability%20eq%20null%20or%20microsoft.graph.managedApp/appAvailability%20eq%20%27lineOfBusiness%27%20or%20isAssigned%20eq%20true)' | Get-MGGraphAllPages
 
     foreach ($clientApp in $clientApps) {
-        $assignments = Get-DeviceAppManagement_MobileApps_Assignments -MobileAppId $clientApp.id 
+        
+        $assignments = Get-DeviceAppManagement_MobileApps_Assignments -MobileAppId $clientApp.id
         if ($assignments) {
             $fileName = ($clientApp.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
             $assignments | ConvertTo-Json -Depth 100 | Out-File -LiteralPath "$path\Client Apps\Assignments\$($clientApp.id) - $fileName.json"
