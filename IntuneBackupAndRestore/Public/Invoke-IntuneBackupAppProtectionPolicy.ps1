@@ -23,11 +23,6 @@ function Invoke-IntuneBackupAppProtectionPolicy {
         [string]$ApiVersion = "Beta"
     )
 
-    # Set the Microsoft Graph API endpoint
-    if (-not ((Get-MSGraphEnvironment).SchemaVersion -eq $apiVersion)) {
-        Update-MSGraphEnvironment -SchemaVersion $apiVersion -Quiet
-        Connect-MSGraph -ForceNonInteractive -Quiet
-    }
 
     # Create folder if not exists
     if (-not (Test-Path "$Path\App Protection Policies")) {
@@ -35,7 +30,7 @@ function Invoke-IntuneBackupAppProtectionPolicy {
     }
 
     # Get all App Protection Policies
-    $appProtectionPolicies = Get-IntuneAppProtectionPolicy | Get-MSGraphAllPages
+    $appProtectionPolicies = Get-IntuneAppProtectionPolicy | Get-MGGraphAllPages
 
     foreach ($appProtectionPolicy in $appProtectionPolicies) {
         $fileName = ($appProtectionPolicy.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'

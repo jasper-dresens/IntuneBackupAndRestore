@@ -28,10 +28,10 @@
         $null = New-Item -Path "$Path\Device Health Scripts\Assignments" -ItemType Directory
     }
 
-    $healthScripts = Invoke-MSGraphRequest -Url "https://graph.microsoft.com/$ApiVersion/deviceManagement/deviceHealthScripts" | Select-Object -ExpandProperty Value
+    $healthScripts = Invoke-MgGraphRequest -Uri "https://graph.microsoft.com/$ApiVersion/deviceManagement/deviceHealthScripts" | Select-Object -ExpandProperty Value
 
     foreach ($healthScript in $healthScripts) {
-        $assignments = Invoke-MSGraphRequest -Url "https://graph.microsoft.com/$ApiVersion/deviceManagement/deviceHealthScripts/$($healthScript.id)/assignments"
+        $assignments = Invoke-MgGraphRequest -Uri "https://graph.microsoft.com/$ApiVersion/deviceManagement/deviceHealthScripts/$($healthScript.id)/assignments"
 
         if ($assignments) {
             $fileName = ($healthScript.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'

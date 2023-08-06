@@ -28,7 +28,7 @@
         $null = New-Item -Path "$Path\Device Health Scripts" -ItemType Directory
     }
 
-    $healthScripts = Invoke-MSGraphRequest -Url "https://graph.microsoft.com/$ApiVersion/deviceManagement/deviceHealthScripts" | Select-Object -ExpandProperty Value
+    $healthScripts = Invoke-MgGraphRequest -Uri "https://graph.microsoft.com/$ApiVersion/deviceManagement/deviceHealthScripts" | Select-Object -ExpandProperty Value
 
     foreach ($healthScript in $healthScripts) {
         $fileName = ($healthScript.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
@@ -41,7 +41,7 @@
             $null = New-Item -Path "$Path\Device Health Scripts\Script Content" -ItemType Directory
         }
 
-        $healthScriptObject = Invoke-MSGraphRequest -Url "https://graph.microsoft.com/$ApiVersion/deviceManagement/deviceHealthScripts/$($healthScript.id)"
+        $healthScriptObject = Invoke-MgGraphRequest -Uri "https://graph.microsoft.com/$ApiVersion/deviceManagement/deviceHealthScripts/$($healthScript.id)"
         $healthScriptDetectionContent = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($healthScriptObject.detectionScriptContent))
         $healthScriptDetectionContent | Out-File -LiteralPath "$path\Device Health Scripts\Script Content\$fileName`_detection.ps1"
         $healthScriptRemediationContent = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($healthScriptObject.remediationScriptContent))

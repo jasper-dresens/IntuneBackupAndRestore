@@ -12,22 +12,22 @@
 RootModule = 'IntuneBackupAndRestore.psm1'
 
 # Version number of this module.
-ModuleVersion = '3.2.0'
+ModuleVersion = '3.3.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
 
 # ID used to uniquely identify this module
-GUID = 'c4e21603-4445-4fe1-b202-3653b6b2e666'
+GUID = 'c4e21603-4445-4fe1-b202-3653b6b2e667'
 
 # Author of this module
-Author = 'John Seerden'
+Author = 'John Seerden & Jasper Dresens'
 
 # Company or vendor of this module
 CompanyName = 'Unknown'
 
 # Copyright statement for this module
-Copyright = '(c) 2021 John Seerden. All rights reserved.'
+Copyright = '(c) 2021 John Seerden & Jasper Dresens. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'PowerShell Module that queries Microsoft Graph, and allows for cross-tenant Backup & Restore actions of your Intune Configuration. '
@@ -49,9 +49,6 @@ Description = 'PowerShell Module that queries Microsoft Graph, and allows for cr
 
 # Processor architecture (None, X86, Amd64) required by this module
 # ProcessorArchitecture = ''
-
-# Modules that must be imported into the global environment prior to importing this module
-# RequiredModules = @(@{ModuleName="MSGraphFunctions", ModuleVersion="2.2.0", Guid="0a3f3df4-64a0-430a-937d-a9b1901349ce"})
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
@@ -98,7 +95,7 @@ PrivateData = @{
         Tags = @("Graph", "Intune", "PowerShell", "Backup", "Restore")
 
         # A URL to the license for this module.
-        LicenseUri = 'https://github.com/jseerden/IntuneBackupAndRestore/blob/master/LICENSE'
+        LicenseUri = 'https://github.com/jasper-dresens/IntuneBackupAndRestore/blob/master/LICENSE'
 
         # A URL to the main website for this project.
         # ProjectUri = ''

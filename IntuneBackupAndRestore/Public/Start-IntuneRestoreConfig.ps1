@@ -13,9 +13,8 @@ function Start-IntuneRestoreConfig() {
     Start-IntuneRestore -Path C:\temp
     
     .NOTES
-    Requires the MSGraphFunctions PowerShell Module
-
-    Connect to MSGraph first, using the 'Connect-Graph' cmdlet.
+   
+    Connect to MgGraph first, using the 'Connect-MgGraph' cmdlet.
     #>
     
     [CmdletBinding()]
