@@ -23,12 +23,6 @@ function Invoke-IntuneRestoreConfigurationPolicy {
         [string]$ApiVersion = "Beta"
     )
 
-    # Set the Microsoft Graph API endpoint
-    if (-not ((Get-MSGraphEnvironment).SchemaVersion -eq $apiVersion)) {
-        Update-MSGraphEnvironment -SchemaVersion $apiVersion -Quiet
-        Connect-MSGraph -ForceNonInteractive -Quiet
-    }
-
     # Get all Settings Catalog Policies
     $configurationPolicies = Get-ChildItem -Path "$Path\Settings Catalog" -File
 
@@ -40,7 +34,7 @@ function Invoke-IntuneRestoreConfigurationPolicy {
 
         # Restore the Settings Catalog Policy
         try {
-            $null = Invoke-MSGraphRequest -HttpMethod POST -Content $requestBody.toString() -Url "deviceManagement/configurationPolicies" -ErrorAction Stop
+            $null = Invoke-MgGraphRequest -Method POST -Content $requestBody.toString() -Uri "deviceManagement/configurationPolicies" -ErrorAction Stop
             [PSCustomObject]@{
                 "Action" = "Restore"
                 "Type"   = "Settings Catalog"

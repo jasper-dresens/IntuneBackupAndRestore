@@ -23,12 +23,6 @@ function Invoke-IntuneRestoreGroupPolicyConfiguration {
         [string]$ApiVersion = "Beta"
     )
 
-    # Set the Microsoft Graph API endpoint
-    if (-not ((Get-MSGraphEnvironment).SchemaVersion -eq $apiVersion)) {
-        Update-MSGraphEnvironment -SchemaVersion $apiVersion -Quiet
-        Connect-MSGraph -ForceNonInteractive -Quiet
-    }
-
     # Get all Group Policy Configurations
     $groupPolicyConfigurations = Get-ChildItem -Path "$Path\Administrative Templates" -File
 
@@ -40,7 +34,7 @@ function Invoke-IntuneRestoreGroupPolicyConfiguration {
             $groupPolicyConfigurationRequestBody = @{
                 displayName = $groupPolicyConfiguration.BaseName
             }
-            $groupPolicyConfigurationObject = Invoke-MSGraphRequest -HttpMethod POST -Url "deviceManagement/groupPolicyConfigurations" -Content ($groupPolicyConfigurationRequestBody | ConvertTo-Json).toString() -ErrorAction Stop
+            $groupPolicyConfigurationObject = Invoke-MgGraphRequest -Method POST -Uri "deviceManagement/groupPolicyConfigurations" -Content ($groupPolicyConfigurationRequestBody | ConvertTo-Json).toString() -ErrorAction Stop
             [PSCustomObject]@{
                 "Action" = "Restore"
                 "Type"   = "Administrative Template"
@@ -49,8 +43,8 @@ function Invoke-IntuneRestoreGroupPolicyConfiguration {
             }
 
             foreach ($groupPolicyConfigurationSetting in $groupPolicyConfigurationContent) {
-                $groupPolicyDefinitionValue = Invoke-MSGraphRequest -HttpMethod POST -Url "deviceManagement/groupPolicyConfigurations/$($groupPolicyConfigurationObject.id)/definitionValues" -Content ($groupPolicyConfigurationSetting | ConvertTo-Json -Depth 100).toString() -ErrorAction Stop
-                $groupPolicyDefinition = Invoke-MSGraphRequest -HttpMethod GET -Url "deviceManagement/groupPolicyConfigurations/$($groupPolicyConfigurationObject.id)/definitionValues/$($groupPolicyDefinitionValue.id)/definition"
+                $groupPolicyDefinitionValue = Invoke-MgGraphRequest -Method POST -Uri "deviceManagement/groupPolicyConfigurations/$($groupPolicyConfigurationObject.id)/definitionValues" -Content ($groupPolicyConfigurationSetting | ConvertTo-Json -Depth 100).toString() -ErrorAction Stop
+                $groupPolicyDefinition = Invoke-MgGraphRequest -Method GET -Uri "deviceManagement/groupPolicyConfigurations/$($groupPolicyConfigurationObject.id)/definitionValues/$($groupPolicyDefinitionValue.id)/definition"
                 [PSCustomObject]@{
                     "Action" = "Restore"
                     "Type"   = "Administrative Template Setting"

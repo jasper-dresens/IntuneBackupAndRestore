@@ -23,19 +23,13 @@ function Invoke-IntuneBackupClientAppAssignment {
         [string]$ApiVersion = "Beta"
     )
 
-    # Set the Microsoft Graph API endpoint
-    if (-not ((Get-MSGraphEnvironment).SchemaVersion -eq $apiVersion)) {
-        Update-MSGraphEnvironment -SchemaVersion $apiVersion -Quiet
-        Connect-MSGraph -ForceNonInteractive -Quiet
-    }
-
     # Create folder if not exists
     if (-not (Test-Path "$Path\Client Apps\Assignments")) {
         $null = New-Item -Path "$Path\Client Apps\Assignments" -ItemType Directory
     }
 
     # Get all assignments from all policies
-    $clientApps = Invoke-MSGraphRequest -Url 'deviceAppManagement/mobileApps?$filter=(microsoft.graph.managedApp/appAvailability%20eq%20null%20or%20microsoft.graph.managedApp/appAvailability%20eq%20%27lineOfBusiness%27%20or%20isAssigned%20eq%20true)' | Get-MSGraphAllPages
+    $clientApps = Invoke-MgGraphRequest -Uri 'deviceAppManagement/mobileApps?$filter=(microsoft.graph.managedApp/appAvailability%20eq%20null%20or%20microsoft.graph.managedApp/appAvailability%20eq%20%27lineOfBusiness%27%20or%20isAssigned%20eq%20true)' | Get-MGGraphAllPages
 
     foreach ($clientApp in $clientApps) {
         $assignments = Get-DeviceAppManagement_MobileApps_Assignments -MobileAppId $clientApp.id 

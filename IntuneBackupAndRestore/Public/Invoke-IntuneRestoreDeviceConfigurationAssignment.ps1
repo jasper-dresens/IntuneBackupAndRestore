@@ -32,12 +32,6 @@ function Invoke-IntuneRestoreDeviceConfigurationAssignment {
         [string]$ApiVersion = "Beta"
     )
 
-    # Set the Microsoft Graph API endpoint
-    if (-not ((Get-MSGraphEnvironment).SchemaVersion -eq $apiVersion)) {
-        Update-MSGraphEnvironment -SchemaVersion $apiVersion -Quiet
-        Connect-MSGraph -ForceNonInteractive -Quiet
-    }
-
     # Get all policies with assignments
     $deviceConfigurations = Get-ChildItem -Path "$Path\Device Configurations\Assignments"
     foreach ($deviceConfiguration in $deviceConfigurations) {
@@ -64,7 +58,7 @@ function Invoke-IntuneRestoreDeviceConfigurationAssignment {
                 $deviceConfigurationObject = Get-DeviceManagement_DeviceConfigurations -DeviceConfigurationId $deviceConfigurationAssignments[0].deviceConfigurationId
             }
             else {
-                $deviceConfigurationObject = Get-DeviceManagement_DeviceConfigurations | Get-MSGraphAllPages | Where-Object displayName -eq "$($deviceConfiguration.BaseName)"
+                $deviceConfigurationObject = Get-DeviceManagement_DeviceConfigurations | Get-MGGraphAllPages | Where-Object displayName -eq "$($deviceConfiguration.BaseName)"
                 if (-not ($deviceConfigurationObject)) {
                     Write-Verbose "Error retrieving Intune Device Configuration for $($deviceConfiguration.FullName). Skipping assignment restore" -Verbose
                     continue
@@ -79,7 +73,7 @@ function Invoke-IntuneRestoreDeviceConfigurationAssignment {
 
         # Restore the assignments
         try {
-            $null = Invoke-MSGraphRequest -HttpMethod POST -Content $requestBody.toString() -Url "deviceManagement/deviceConfigurations/$($deviceConfigurationObject.id)/assign" -ErrorAction Stop
+            $null = Invoke-MgGraphRequest -Method POST -Content $requestBody.toString() -Uri "deviceManagement/deviceConfigurations/$($deviceConfigurationObject.id)/assign" -ErrorAction Stop
             [PSCustomObject]@{
                 "Action" = "Restore"
                 "Type"   = "Device Configuration Assignments"

@@ -23,19 +23,13 @@ function Invoke-IntuneBackupDeviceConfigurationAssignment {
         [string]$ApiVersion = "Beta"
     )
 
-    # Set the Microsoft Graph API endpoint
-    if (-not ((Get-MSGraphEnvironment).SchemaVersion -eq $apiVersion)) {
-        Update-MSGraphEnvironment -SchemaVersion $apiVersion -Quiet
-        Connect-MSGraph -ForceNonInteractive -Quiet
-    }
-
     # Create folder if not exists
     if (-not (Test-Path "$Path\Device Configurations\Assignments")) {
         $null = New-Item -Path "$Path\Device Configurations\Assignments" -ItemType Directory
     }
 
     # Get all assignments from all policies
-    $deviceConfigurations = Get-DeviceManagement_DeviceConfigurations | Get-MSGraphAllPages
+    $deviceConfigurations = Get-DeviceManagement_DeviceConfigurations | Get-MGGraphAllPages
 
     foreach ($deviceConfiguration in $deviceConfigurations) {
         $assignments = Get-DeviceManagement_DeviceConfigurations_Assignments -DeviceConfigurationId $deviceConfiguration.id 

@@ -23,22 +23,16 @@ function Invoke-IntuneBackupConfigurationPolicyAssignment {
         [string]$ApiVersion = "Beta"
     )
 
-    # Set the Microsoft Graph API endpoint
-    if (-not ((Get-MSGraphEnvironment).SchemaVersion -eq $apiVersion)) {
-        Update-MSGraphEnvironment -SchemaVersion $apiVersion -Quiet
-        Connect-MSGraph -ForceNonInteractive -Quiet
-    }
-
     # Create folder if not exists
     if (-not (Test-Path "$Path\Settings Catalog\Assignments")) {
         $null = New-Item -Path "$Path\Settings Catalog\Assignments" -ItemType Directory
     }
 
     # Get all assignments from all policies
-    $configurationPolicies = Invoke-MSGraphRequest -HttpMethod GET -Url "deviceManagement/configurationPolicies" | Get-MSGraphAllPages
+    $configurationPolicies = Invoke-MgGraphRequest -Method GET -Uri "deviceManagement/configurationPolicies" | Get-MGGraphAllPages
 
     foreach ($configurationPolicy in $configurationPolicies) {
-        $assignments = Invoke-MSGraphRequest -HttpMethod GET -Url "deviceManagement/configurationPolicies/$($configurationPolicy.id)/assignments" | Get-MSGraphAllPages
+        $assignments = Invoke-MgGraphRequest -Method GET -Uri "deviceManagement/configurationPolicies/$($configurationPolicy.id)/assignments" | Get-MGGraphAllPages
         
         if ($assignments) {
             $fileName = ($configurationPolicy.name).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
