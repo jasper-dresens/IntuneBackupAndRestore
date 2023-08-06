@@ -12,7 +12,7 @@ function Invoke-IntuneRestoreDeviceCompliancePolicy {
     .EXAMPLE
     Invoke-IntuneRestoreDeviceCompliance -Path "C:\temp" -RestoreById $true
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

@@ -37,7 +37,9 @@ function Get-MgGraphAllPages {
 
             if ($page.ContainsKey('@odata.nextLink') -or $page.ContainsKey('value')) {
                 $values = $page.value
-            } else { # this will probably never fire anymore, but maybe.
+            }
+            else {
+                # this will probably never fire anymore, but maybe.
                 $values = $page
             }
 
@@ -45,19 +47,20 @@ function Get-MgGraphAllPages {
             # Default returned objects are hashtables, so this makes for easy pscustomobject conversion on demand
             if ($values) {
                 if ($ToPSCustomObject) {
-                    $values | ForEach-Object {[pscustomobject]$_}   
-                } else {
+                    $values | ForEach-Object { [pscustomobject]$_ }   
+                }
+                else {
                     $values | Write-Output
                 }
             }
         }
 
-        while (-Not ([string]::IsNullOrWhiteSpace($currentNextLink)))
-        {
+        while (-Not ([string]::IsNullOrWhiteSpace($currentNextLink))) {
             # Make the call to get the next page
             try {
                 $page = Invoke-MgGraphRequest -Uri $currentNextLink -Method GET
-            } catch {
+            }
+            catch {
                 throw $_
             }
 
@@ -73,8 +76,9 @@ function Get-MgGraphAllPages {
 
             # Default returned objects are hashtables, so this makes for easy pscustomobject conversion on demand
             if ($ToPSCustomObject) {
-                $values | ForEach-Object {[pscustomobject]$_}   
-            } else {
+                $values | ForEach-Object { [pscustomobject]$_ }   
+            }
+            else {
                 $values | Write-Output
             }
         }

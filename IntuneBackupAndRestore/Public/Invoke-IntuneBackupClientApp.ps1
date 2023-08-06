@@ -12,7 +12,7 @@ function Invoke-IntuneBackupClientApp {
     .EXAMPLE
     Invoke-IntuneBackupClientApp -Path "C:\temp"
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

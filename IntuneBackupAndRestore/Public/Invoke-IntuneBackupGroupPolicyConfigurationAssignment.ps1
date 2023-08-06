@@ -12,7 +12,7 @@ function Invoke-IntuneBackupGroupPolicyConfigurationAssignment {
     .EXAMPLE
     Invoke-IntuneBackupGroupPolicyConfigurationAssignment -Path "C:\temp"
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

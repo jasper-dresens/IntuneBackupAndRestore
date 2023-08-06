@@ -12,7 +12,7 @@ function Invoke-IntuneBackupDeviceConfiguration {
     .EXAMPLE
     Invoke-IntuneBackupDeviceConfiguration -Path "C:\temp"
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

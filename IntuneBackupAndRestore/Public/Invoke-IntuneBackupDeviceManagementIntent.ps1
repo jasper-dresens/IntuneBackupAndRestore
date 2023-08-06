@@ -12,7 +12,7 @@ function Invoke-IntuneBackupDeviceManagementIntent {
     .EXAMPLE
     Invoke-IntuneBackupDeviceManagementIntent -Path "C:\temp"
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

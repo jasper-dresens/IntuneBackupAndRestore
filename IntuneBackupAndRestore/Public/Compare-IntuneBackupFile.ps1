@@ -18,7 +18,7 @@ function Compare-IntuneBackupFile() {
     .NOTES
     The DifferenceFilePath should point to the latest Intune Backup file, as it might contain new properties.
     #>
-    
+
     param(
         [Parameter(Mandatory = $true)]
         [string]$ReferenceFilePath,
@@ -82,12 +82,12 @@ function Compare-IntuneBackupFile() {
     }
 
     $flattenBackupArray = Invoke-FlattenBackupObject -PSCustomObject $backupFile
-    $flattenLatestBackupArray  = Invoke-FlattenBackupObject -PSCustomObject $latestBackupFile
+    $flattenLatestBackupArray = Invoke-FlattenBackupObject -PSCustomObject $latestBackupFile
 
     # Check if the JSON needs flattening, else it's just an object instead of an array.
     if ($flattenBackupArray -is [array]) {    
         $flattenBackupObject = New-Object -TypeName PSObject
-        for ($i=0; $i -le $flattenBackupArray.Length; $i++) {
+        for ($i = 0; $i -le $flattenBackupArray.Length; $i++) {
             foreach ($property in $flattenBackupArray[$i].PSObject.Properties) {
                 $flattenBackupObject | Add-Member -NotePropertyName $property.Name -NotePropertyValue $property.Value
             }
@@ -100,7 +100,7 @@ function Compare-IntuneBackupFile() {
     # Check if the JSON needs flattening, else it's just an object instead of an array.
     if ($flattenLatestBackupArray -is [array]) {
         $flattenLatestBackupObject = New-Object -TypeName PSObject
-        for ($i=0; $i -le $flattenLatestBackupArray.Length; $i++) {
+        for ($i = 0; $i -le $flattenLatestBackupArray.Length; $i++) {
             foreach ($property in $flattenLatestBackupArray[$i].PSObject.Properties) {
                 $flattenLatestBackupObject | Add-Member -NotePropertyName $property.Name -NotePropertyValue $property.Value -Force
             }

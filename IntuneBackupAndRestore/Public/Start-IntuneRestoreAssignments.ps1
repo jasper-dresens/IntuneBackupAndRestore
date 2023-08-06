@@ -17,7 +17,7 @@ function Start-IntuneRestoreAssignments() {
 
     Set $RestoreById to $true, if the Configuration itself was not restored from backup. Set $RestoreById to $false if the configurations have been re-created (new unique ID's).
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

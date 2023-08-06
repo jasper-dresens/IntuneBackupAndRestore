@@ -12,7 +12,7 @@ function Invoke-IntuneBackupConfigurationPolicy {
     .EXAMPLE
     Invoke-IntuneBackupConfigurationPolicy -Path "C:\temp"
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

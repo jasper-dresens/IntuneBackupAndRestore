@@ -18,7 +18,7 @@ function Invoke-IntuneRestoreDeviceCompliancePolicyAssignment {
     .EXAMPLE
     Invoke-IntuneRestoreDeviceCompliancePolicyAssignment -Path "C:\temp" -RestoreById $true
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

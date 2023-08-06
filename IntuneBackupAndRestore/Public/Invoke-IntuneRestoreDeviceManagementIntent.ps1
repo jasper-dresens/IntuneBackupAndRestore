@@ -12,7 +12,7 @@ function Invoke-IntuneRestoreDeviceManagementIntent {
     .EXAMPLE
     Invoke-IntuneRestoreDeviceManagementIntent -Path "C:\temp" -RestoreById $true
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

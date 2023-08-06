@@ -16,7 +16,7 @@ function Invoke-IntuneRestoreAppProtectionPolicyAssignment {
     .EXAMPLE
     Invoke-IntuneRestoreAppProtectionPolicyAssignment -Path "C:\temp" -RestoreById $true
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

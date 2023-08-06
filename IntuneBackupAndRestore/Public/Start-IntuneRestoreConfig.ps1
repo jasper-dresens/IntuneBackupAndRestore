@@ -16,7 +16,7 @@ function Start-IntuneRestoreConfig() {
    
     Connect to MgGraph first, using the 'Connect-MgGraph' cmdlet.
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

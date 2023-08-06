@@ -18,7 +18,7 @@ function Invoke-IntuneRestoreConfigurationPolicyAssignment {
     .EXAMPLE
     Invoke-IntuneBackupConfigurationPolicyAssignment -Path "C:\temp" -RestoreById $true
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

@@ -12,7 +12,7 @@ function Invoke-IntuneBackupAppProtectionPolicy {
     .EXAMPLE
     Invoke-IntuneBackupAppProtectionPolicy -Path "C:\temp"
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

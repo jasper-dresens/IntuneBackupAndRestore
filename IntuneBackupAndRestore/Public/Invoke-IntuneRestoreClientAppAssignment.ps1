@@ -16,7 +16,7 @@ function Invoke-IntuneRestoreClientAppAssignment {
     .EXAMPLE
     Invoke-IntuneRestoreClientAppAssignment -Path "C:\temp" -RestoreById $true
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

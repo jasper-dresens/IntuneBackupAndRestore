@@ -12,7 +12,7 @@ function Invoke-IntuneBackupDeviceCompliancePolicyAssignment {
     .EXAMPLE
     Invoke-IntuneBackupDeviceCompliancePolicyAssignment -Path "C:\temp"
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

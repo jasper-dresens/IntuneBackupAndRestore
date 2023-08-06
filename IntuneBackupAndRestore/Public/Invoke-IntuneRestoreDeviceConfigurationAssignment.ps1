@@ -18,7 +18,7 @@ function Invoke-IntuneRestoreDeviceConfigurationAssignment {
     .EXAMPLE
     Invoke-IntuneRestoreDeviceConfigurationAssignment -Path "C:\temp" -RestoreById $true
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]

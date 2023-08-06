@@ -12,7 +12,7 @@ function Invoke-IntuneBackupDeviceManagementScriptAssignment {
     .EXAMPLE
     Invoke-IntuneBackupDeviceManagementScriptAssignment -Path "C:\temp"
     #>
-    
+
     [CmdletBinding()]
     param(
         [Parameter(Mandatory = $true)]
