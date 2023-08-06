@@ -33,7 +33,7 @@ function Invoke-IntuneRestoreDeviceManagementIntent {
 
         # Restore the device management intent
         try {
-            $null = Invoke-MgGraphRequest -Method POST -Uri "deviceManagement/templates/$($templateId)/createInstance" -Content $deviceManagementIntentContent.toString() -ErrorAction Stop
+            $null = Invoke-MgGraphRequest -Method POST ("https://graph.microsoft.com/$ApiVersion" + "deviceManagement/templates/$($templateId)/createInstance") -Body $deviceManagementIntentContent.toString() -ErrorAction Stop
             [PSCustomObject]@{
                 "Action" = "Restore"
                 "Type"   = "Device Management Intent"

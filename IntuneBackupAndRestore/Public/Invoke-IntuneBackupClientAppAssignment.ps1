@@ -29,10 +29,10 @@ function Invoke-IntuneBackupClientAppAssignment {
     }
 
     # Get all assignments from all policies
-    $clientApps = Invoke-MgGraphRequest -Uri 'deviceAppManagement/mobileApps?$filter=(microsoft.graph.managedApp/appAvailability%20eq%20null%20or%20microsoft.graph.managedApp/appAvailability%20eq%20%27lineOfBusiness%27%20or%20isAssigned%20eq%20true)' | Get-MGGraphAllPages
+    $clientApps = Invoke-MgGraphRequest -Uri ("https://graph.microsoft.com/$ApiVersion" + '/deviceAppManagement/mobileApps?$filter=(microsoft.graph.managedApp/appAvailability%20eq%20null%20or%20microsoft.graph.managedApp/appAvailability%20eq%20%27lineOfBusiness%27%20or%20isAssigned%20eq%20true)') | Get-MGGraphAllPages
 
     foreach ($clientApp in $clientApps) {
-        
+
         $assignments = Get-DeviceAppManagement_MobileApps_Assignments -MobileAppId $clientApp.id
         if ($assignments) {
             $fileName = ($clientApp.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'

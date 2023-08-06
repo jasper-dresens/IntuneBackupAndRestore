@@ -29,11 +29,11 @@ function Invoke-IntuneBackupDeviceManagementScript {
     }
 
     # Get all device management scripts
-    $deviceManagementScripts = Invoke-MgGraphRequest -Method GET -Uri "deviceManagement/deviceManagementScripts" | Get-MGGraphAllPages
+    $deviceManagementScripts = Invoke-MgGraphRequest -Method GET ("https://graph.microsoft.com/$ApiVersion" + "deviceManagement/deviceManagementScripts") | Get-MGGraphAllPages
 
     foreach ($deviceManagementScript in $deviceManagementScripts) {
         # ScriptContent returns null, so we have to query Microsoft Graph for each script
-        $deviceManagementScriptObject = Invoke-MgGraphRequest -Method GET -Uri "deviceManagement/deviceManagementScripts/$($deviceManagementScript.Id)"
+        $deviceManagementScriptObject = Invoke-MgGraphRequest -Method GET ("https://graph.microsoft.com/$ApiVersion" + "deviceManagement/deviceManagementScripts/$($deviceManagementScript.Id)")
         $deviceManagementScriptFileName = ($deviceManagementScriptObject.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
         $deviceManagementScriptObject | ConvertTo-Json | Out-File -LiteralPath "$path\Device Management Scripts\$deviceManagementScriptFileName.json"
 

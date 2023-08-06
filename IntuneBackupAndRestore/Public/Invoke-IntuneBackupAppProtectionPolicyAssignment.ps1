@@ -34,19 +34,19 @@ function Invoke-IntuneBackupAppProtectionPolicyAssignment {
     foreach ($appProtectionPolicy in $appProtectionPolicies) {
         # If Android
         if ($appProtectionPolicy.'@odata.type' -eq '#microsoft.graph.androidManagedAppProtection') {
-            $assignments = Invoke-MgGraphRequest -Method GET -Uri "deviceAppManagement/androidManagedAppProtections('$($appProtectionPolicy.id)')/assignments"
+            $assignments = Invoke-MgGraphRequest -Method GET -Uri ("https://graph.microsoft.com/$ApiVersion" + "deviceAppManagement/androidManagedAppProtections('$($appProtectionPolicy.id)')/assignments")
         }
         # Elseif iOS
         elseif ($appProtectionPolicy.'@odata.type' -eq '#microsoft.graph.iosManagedAppProtection') {
-            $assignments = Invoke-MgGraphRequest -Method GET -Uri "deviceAppManagement/iosManagedAppProtections('$($appProtectionPolicy.id)')/assignments"
+            $assignments = Invoke-MgGraphRequest -Method GET -Uri ("https://graph.microsoft.com/$ApiVersion" + "deviceAppManagement/iosManagedAppProtections('$($appProtectionPolicy.id)')/assignments")
         }
         # Elseif Windows 10 with enrollment
         elseif ($appProtectionPolicy.'@odata.type' -eq '#microsoft.graph.mdmWindowsInformationProtectionPolicy') {
-            $assignments = Invoke-MgGraphRequest -Method GET -Uri "deviceAppManagement/mdmWindowsInformationProtectionPolicies('$($appProtectionPolicy.id)')/assignments"
+            $assignments = Invoke-MgGraphRequest -Method GET -Uri ("https://graph.microsoft.com/$ApiVersion" + "deviceAppManagement/mdmWindowsInformationProtectionPolicies('$($appProtectionPolicy.id)')/assignments")
         }
         # Elseif Windows 10 without enrollment
         elseif ($appProtectionPolicy.'@odata.type' -eq '#microsoft.graph.windowsInformationProtectionPolicy') {
-            $assignments = Invoke-MgGraphRequest -Method GET -Uri "deviceAppManagement/windowsInformationProtectionPolicies('$($appProtectionPolicy.id)')/assignments"
+            $assignments = Invoke-MgGraphRequest -Method GET -Uri ("https://graph.microsoft.com/$ApiVersion" + "deviceAppManagement/windowsInformationProtectionPolicies('$($appProtectionPolicy.id)')/assignments")
         }
         else {
             # Not supported App Protection Policy

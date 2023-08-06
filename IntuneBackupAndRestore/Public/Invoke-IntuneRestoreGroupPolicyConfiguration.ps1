@@ -34,7 +34,7 @@ function Invoke-IntuneRestoreGroupPolicyConfiguration {
             $groupPolicyConfigurationRequestBody = @{
                 displayName = $groupPolicyConfiguration.BaseName
             }
-            $groupPolicyConfigurationObject = Invoke-MgGraphRequest -Method POST -Uri "deviceManagement/groupPolicyConfigurations" -Content ($groupPolicyConfigurationRequestBody | ConvertTo-Json).toString() -ErrorAction Stop
+            $groupPolicyConfigurationObject = Invoke-MgGraphRequest -Method POST ("https://graph.microsoft.com/$ApiVersion" + "deviceManagement/groupPolicyConfigurations") -Body ($groupPolicyConfigurationRequestBody | ConvertTo-Json).toString() -ErrorAction Stop
             [PSCustomObject]@{
                 "Action" = "Restore"
                 "Type"   = "Administrative Template"
@@ -43,8 +43,8 @@ function Invoke-IntuneRestoreGroupPolicyConfiguration {
             }
 
             foreach ($groupPolicyConfigurationSetting in $groupPolicyConfigurationContent) {
-                $groupPolicyDefinitionValue = Invoke-MgGraphRequest -Method POST -Uri "deviceManagement/groupPolicyConfigurations/$($groupPolicyConfigurationObject.id)/definitionValues" -Content ($groupPolicyConfigurationSetting | ConvertTo-Json -Depth 100).toString() -ErrorAction Stop
-                $groupPolicyDefinition = Invoke-MgGraphRequest -Method GET -Uri "deviceManagement/groupPolicyConfigurations/$($groupPolicyConfigurationObject.id)/definitionValues/$($groupPolicyDefinitionValue.id)/definition"
+                $groupPolicyDefinitionValue = Invoke-MgGraphRequest -Method POST ("https://graph.microsoft.com/$ApiVersion" + "deviceManagement/groupPolicyConfigurations/$($groupPolicyConfigurationObject.id)/definitionValues") -Body ($groupPolicyConfigurationSetting | ConvertTo-Json -Depth 100).toString() -ErrorAction Stop
+                $groupPolicyDefinition = Invoke-MgGraphRequest -Method GET ("https://graph.microsoft.com/$ApiVersion" + "deviceManagement/groupPolicyConfigurations/$($groupPolicyConfigurationObject.id)/definitionValues/$($groupPolicyDefinitionValue.id)/definition")
                 [PSCustomObject]@{
                     "Action" = "Restore"
                     "Type"   = "Administrative Template Setting"

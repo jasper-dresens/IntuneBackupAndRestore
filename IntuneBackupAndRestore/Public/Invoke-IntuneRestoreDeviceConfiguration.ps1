@@ -49,7 +49,7 @@ function Invoke-IntuneRestoreDeviceConfiguration {
 
         # Restore the device configuration
         try {
-            $null = Invoke-MgGraphRequest -Method POST -Content $requestBody.toString() -Uri "deviceManagement/deviceConfigurations" -ErrorAction Stop
+            $null = Invoke-MgGraphRequest -Method POST -Body $requestBody.toString() ("https://graph.microsoft.com/$ApiVersion" + "deviceManagement/deviceConfigurations") -ErrorAction Stop
             [PSCustomObject]@{
                 "Action" = "Restore"
                 "Type"   = "Device Configuration"

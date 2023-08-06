@@ -49,7 +49,7 @@ function Invoke-IntuneRestoreAppProtectionPolicy {
 
         # Restore the App Protection Policy
         try {
-            $null = Invoke-MgGraphRequest -Method POST -Content $requestBody.toString() -Uri "deviceAppManagement/managedAppPolicies" -ErrorAction Stop
+            $null = Invoke-MgGraphRequest -Method POST -Body $requestBody.toString() ("https://graph.microsoft.com/$ApiVersion" + "deviceAppManagement/managedAppPolicies") -ErrorAction Stop
 
             [PSCustomObject]@{
                 "Action" = "Restore"
